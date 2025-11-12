@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class WelcomeController {
+public class WelcomeController {
 
 	private static final String WELCOME_MESSAGE = "Welcome to the CBS backend!";
 
