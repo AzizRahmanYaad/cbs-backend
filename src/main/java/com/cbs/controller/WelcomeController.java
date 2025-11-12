@@ -1,0 +1,31 @@
+package com.cbs.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api")
+public class WelcomeController {
+
+    @GetMapping("/welcome")
+    public Map<String, Object> welcome() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Welcome to CBS Backend Application!");
+        response.put("description", "Unified Dashboard for CBS Team for Various Modules");
+        response.put("status", "running");
+        response.put("version", "1.0.0");
+        return response;
+    }
+
+    @GetMapping("/")
+    public Map<String, String> home() {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "CBS Backend API is running successfully!");
+        response.put("welcomeEndpoint", "/api/welcome");
+        return response;
+    }
+}
