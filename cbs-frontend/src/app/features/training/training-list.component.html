@@ -1,0 +1,64 @@
+<div class="training-container">
+  <div class="page-header">
+    <h1>Training Programs</h1>
+    <button class="btn-primary">+ Create Training</button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading">Loading trainings...</div>
+  }
+
+  @if (error()) {
+    <div class="error-message">{{ error() }}</div>
+  }
+
+  @if (!loading() && trainings().length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">📚</div>
+      <h3>No trainings found</h3>
+      <p>Create your first training program to get started</p>
+      <button class="btn-primary">Create Training</button>
+    </div>
+  }
+
+  @if (trainings().length > 0) {
+    <div class="trainings-grid">
+      @for (training of trainings(); track training.id) {
+        <div class="training-card">
+          <div class="training-header">
+            <h3>{{ training.title }}</h3>
+            <span class="status-badge" [ngClass]="getStatusClass(training.status)">
+              {{ training.status }}
+            </span>
+          </div>
+          
+          <p class="training-description">{{ training.description }}</p>
+          
+          <div class="training-details">
+            <div class="detail-item">
+              <span class="detail-label">Instructor:</span>
+              <span class="detail-value">{{ training.instructor }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Start Date:</span>
+              <span class="detail-value">{{ training.startDate | date:'MMM dd, yyyy' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">End Date:</span>
+              <span class="detail-value">{{ training.endDate | date:'MMM dd, yyyy' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Capacity:</span>
+              <span class="detail-value">{{ training.enrolled }} / {{ training.capacity }}</span>
+            </div>
+          </div>
+
+          <div class="training-actions">
+            <button class="btn-secondary">View Details</button>
+            <button class="btn-primary">Enroll</button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

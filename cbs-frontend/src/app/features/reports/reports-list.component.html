@@ -1,0 +1,75 @@
+<div class="reports-container">
+  <div class="page-header">
+    <h1>Daily Reports</h1>
+    <button class="btn-primary">+ Create Report</button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading">Loading reports...</div>
+  }
+
+  @if (error()) {
+    <div class="error-message">{{ error() }}</div>
+  }
+
+  @if (!loading() && reports().length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">📝</div>
+      <h3>No reports found</h3>
+      <p>Create your first daily report</p>
+      <button class="btn-primary">Create Report</button>
+    </div>
+  }
+
+  @if (reports().length > 0) {
+    <div class="reports-list">
+      @for (report of reports(); track report.id) {
+        <div class="report-card">
+          <div class="report-header">
+            <div>
+              <h3>{{ report.reportDate | date:'EEEE, MMMM dd, yyyy' }}</h3>
+              <span class="hours-badge">{{ report.hoursWorked }} hours</span>
+            </div>
+            <span class="status-badge" [ngClass]="getStatusClass(report.status)">
+              {{ report.status }}
+            </span>
+          </div>
+          
+          <div class="report-content">
+            <div class="content-section">
+              <h4>Summary</h4>
+              <p>{{ report.summary }}</p>
+            </div>
+
+            <div class="content-section">
+              <h4>Tasks Completed</h4>
+              <p>{{ report.tasksCompleted }}</p>
+            </div>
+
+            @if (report.challenges) {
+              <div class="content-section">
+                <h4>Challenges</h4>
+                <p>{{ report.challenges }}</p>
+              </div>
+            }
+
+            @if (report.nextDayPlan) {
+              <div class="content-section">
+                <h4>Next Day Plan</h4>
+                <p>{{ report.nextDayPlan }}</p>
+              </div>
+            }
+          </div>
+
+          <div class="report-footer">
+            <span class="report-date">Created {{ report.createdAt | date:'short' }}</span>
+            <div class="report-actions">
+              <button class="btn-link">View</button>
+              <button class="btn-link">Edit</button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

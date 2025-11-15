@@ -1,0 +1,83 @@
+<div class="drill-test-container">
+  <div class="page-header">
+    <h1>Drill Tests</h1>
+    <button class="btn-primary">+ Create Test</button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading">Loading drill tests...</div>
+  }
+
+  @if (error()) {
+    <div class="error-message">{{ error() }}</div>
+  }
+
+  @if (!loading() && drillTests().length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">🎯</div>
+      <h3>No drill tests found</h3>
+      <p>Create your first drill test</p>
+      <button class="btn-primary">Create Test</button>
+    </div>
+  }
+
+  @if (drillTests().length > 0) {
+    <div class="drill-tests-grid">
+      @for (test of drillTests(); track test.id) {
+        <div class="test-card">
+          <div class="test-header">
+            <h3>{{ test.title }}</h3>
+            <span class="status-badge" [ngClass]="getStatusClass(test.status)">
+              {{ test.status }}
+            </span>
+          </div>
+
+          <p class="test-description">{{ test.description }}</p>
+
+          <div class="test-details">
+            <div class="detail-grid">
+              <div class="detail-item">
+                <span class="detail-icon">📅</span>
+                <div>
+                  <div class="detail-label">Test Date</div>
+                  <div class="detail-value">{{ test.testDate | date:'MMM dd, yyyy' }}</div>
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <span class="detail-icon">⏱️</span>
+                <div>
+                  <div class="detail-label">Duration</div>
+                  <div class="detail-value">{{ test.duration }} minutes</div>
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <span class="detail-icon">🎯</span>
+                <div>
+                  <div class="detail-label">Passing Score</div>
+                  <div class="detail-value">{{ test.passingScore }}%</div>
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <span class="detail-icon">🔄</span>
+                <div>
+                  <div class="detail-label">Max Attempts</div>
+                  <div class="detail-value">{{ test.maxAttempts }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="test-actions">
+            <button class="btn-secondary">View Details</button>
+            @if (test.status === 'ACTIVE' || test.status === 'PUBLISHED') {
+              <button class="btn-primary">Start Test</button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

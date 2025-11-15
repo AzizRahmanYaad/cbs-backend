@@ -1,0 +1,250 @@
+.tasks-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2rem;
+    color: #2d3748;
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #718096;
+}
+
+.error-message {
+  background: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: #718096;
+    margin-bottom: 2rem;
+  }
+}
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+
+  .task-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s;
+    border-top: 4px solid #667eea;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .task-header {
+      margin-bottom: 1rem;
+
+      .task-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+
+        h3 {
+          font-size: 1.1rem;
+          color: #2d3748;
+          margin: 0;
+          flex: 1;
+        }
+
+        .priority-badge {
+          padding: 0.25rem 0.5rem;
+          border-radius: 6px;
+          font-size: 0.7rem;
+          font-weight: 700;
+          text-transform: uppercase;
+
+          &.priority-low {
+            background: #e8f5e9;
+            color: #2e7d32;
+          }
+
+          &.priority-medium {
+            background: #fff3e0;
+            color: #e65100;
+          }
+
+          &.priority-high {
+            background: #ffe0b2;
+            color: #d84315;
+          }
+
+          &.priority-critical {
+            background: #ffebee;
+            color: #c62828;
+          }
+        }
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 0.35rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        &.status-todo {
+          background: #f5f5f5;
+          color: #666;
+        }
+
+        &.status-progress {
+          background: #e6f7ff;
+          color: #0066cc;
+        }
+
+        &.status-review {
+          background: #fff3e0;
+          color: #e65100;
+        }
+
+        &.status-completed {
+          background: #e8f5e9;
+          color: #2e7d32;
+        }
+
+        &.status-cancelled {
+          background: #ffebee;
+          color: #c62828;
+        }
+      }
+    }
+
+    .task-description {
+      color: #718096;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .task-details {
+      margin-bottom: 1rem;
+
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.4rem 0;
+        font-size: 0.85rem;
+
+        .detail-label {
+          color: #718096;
+        }
+
+        .detail-value {
+          color: #2d3748;
+          font-weight: 500;
+        }
+      }
+
+      .task-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+
+        .tag {
+          padding: 0.25rem 0.65rem;
+          background: #f0f4ff;
+          color: #667eea;
+          border-radius: 12px;
+          font-size: 0.75rem;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .task-actions {
+      display: flex;
+      gap: 0.75rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f1f1f1;
+
+      .btn-link {
+        background: none;
+        border: none;
+        color: #667eea;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0.5rem;
+        transition: color 0.2s;
+
+        &:hover {
+          color: #5568d3;
+        }
+      }
+
+      .btn-primary-sm {
+        padding: 0.5rem 1rem;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        margin-left: auto;
+
+        &:hover {
+          background: #5568d3;
+        }
+      }
+    }
+  }
+}
+
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #5568d3;
+  }
+}

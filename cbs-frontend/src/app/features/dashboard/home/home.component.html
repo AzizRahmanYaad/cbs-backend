@@ -1,0 +1,44 @@
+<div class="home-container">
+  <div class="page-header">
+    <h1>Welcome to CBS Dashboard</h1>
+    <p>Your unified platform for training, reporting, tasks, and assessments</p>
+  </div>
+
+  <div class="stats-grid">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-card" [style.border-left-color]="stat.color">
+        <div class="stat-icon" [style.background]="stat.color">{{ stat.icon }}</div>
+        <div class="stat-content">
+          <div class="stat-value">{{ stat.value }}</div>
+          <div class="stat-label">{{ stat.label }}</div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="actions-grid">
+      <a routerLink="/dashboard/training" class="action-card">
+        <span class="action-icon">📚</span>
+        <h3>View Trainings</h3>
+        <p>Browse and manage training sessions</p>
+      </a>
+      <a routerLink="/dashboard/reports" class="action-card">
+        <span class="action-icon">📝</span>
+        <h3>Submit Report</h3>
+        <p>Create your daily work report</p>
+      </a>
+      <a routerLink="/dashboard/tasks" class="action-card">
+        <span class="action-icon">✓</span>
+        <h3>My Tasks</h3>
+        <p>View and update your tasks</p>
+      </a>
+      <a routerLink="/dashboard/drill-tests" class="action-card">
+        <span class="action-icon">🎯</span>
+        <h3>Take Test</h3>
+        <p>Start a drill test assessment</p>
+      </a>
+    </div>
+  </div>
+</div>

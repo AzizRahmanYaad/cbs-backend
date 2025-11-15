@@ -1,0 +1,39 @@
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>CBS Dashboard</h2>
+    </div>
+
+    <nav class="nav-menu">
+      @for (item of navItems; track item.route) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <span class="nav-icon">{{ item.icon }}</span>
+          <span class="nav-label">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      @if (authService.currentUser(); as user) {
+        <div class="user-info">
+          <div class="user-avatar">{{ user.username.charAt(0).toUpperCase() }}</div>
+          <div class="user-details">
+            <div class="user-name">{{ user.username }}</div>
+            <div class="user-role">{{ user.roles[0]?.name || 'User' }}</div>
+          </div>
+        </div>
+        <button class="btn-logout" (click)="logout()">
+          <span>🚪</span> Logout
+        </button>
+      }
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
