@@ -1,7 +1,7 @@
 <div class="training-container">
   <div class="page-header">
     <h1>Training Programs</h1>
-    <button class="btn-primary">+ Create Training</button>
+    <button class="btn-primary" (click)="openCreateModal()">+ Create Training</button>
   </div>
 
   @if (loading()) {
@@ -17,7 +17,7 @@
       <div class="empty-icon">📚</div>
       <h3>No trainings found</h3>
       <p>Create your first training program to get started</p>
-      <button class="btn-primary">Create Training</button>
+      <button class="btn-primary" (click)="openCreateModal()">Create Training</button>
     </div>
   }
 
@@ -54,11 +54,125 @@
           </div>
 
           <div class="training-actions">
-            <button class="btn-secondary">View Details</button>
-            <button class="btn-primary">Enroll</button>
+            <button class="btn-secondary" (click)="openEditModal(training)">Edit</button>
+            <button class="btn-danger" (click)="confirmDelete(training.id)">Delete</button>
           </div>
         </div>
       }
     </div>
   }
 </div>
+
+<app-modal
+  [show]="showModal()"
+  [title]="isEditing() ? 'Edit Training' : 'Create Training'"
+  (close)="closeModal()"
+>
+  <form (ngSubmit)="saveTraining()" class="training-form">
+    <div class="form-group">
+      <label for="title">Title *</label>
+      <input
+        type="text"
+        id="title"
+        [(ngModel)]="formData.title"
+        name="title"
+        required
+        placeholder="Enter training title"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description *</label>
+      <textarea
+        id="description"
+        [(ngModel)]="formData.description"
+        name="description"
+        rows="4"
+        required
+        placeholder="Enter training description"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="instructor">Instructor *</label>
+      <input
+        type="text"
+        id="instructor"
+        [(ngModel)]="formData.instructor"
+        name="instructor"
+        required
+        placeholder="Enter instructor name"
+      />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="startDate">Start Date *</label>
+        <input
+          type="date"
+          id="startDate"
+          [(ngModel)]="formData.startDate"
+          name="startDate"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="endDate">End Date *</label>
+        <input
+          type="date"
+          id="endDate"
+          [(ngModel)]="formData.endDate"
+          name="endDate"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="capacity">Capacity *</label>
+        <input
+          type="number"
+          id="capacity"
+          [(ngModel)]="formData.capacity"
+          name="capacity"
+          min="1"
+          required
+          placeholder="Enter capacity"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status *</label>
+        <select id="status" [(ngModel)]="formData.status" name="status" required>
+          <option value="SCHEDULED">Scheduled</option>
+          <option value="IN_PROGRESS">In Progress</option>
+          <option value="COMPLETED">Completed</option>
+          <option value="CANCELLED">Cancelled</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+      <button type="submit" class="btn-primary">
+        {{ isEditing() ? 'Update' : 'Create' }}
+      </button>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal
+  [show]="showDeleteConfirm()"
+  [title]="'Confirm Delete'"
+  (close)="cancelDelete()"
+>
+  <div class="delete-confirm">
+    <p>Are you sure you want to delete this training? This action cannot be undone.</p>
+    <div class="delete-actions">
+      <button type="button" class="btn-cancel" (click)="cancelDelete()">Cancel</button>
+      <button type="button" class="btn-danger" (click)="deleteTraining()">Delete</button>
+    </div>
+  </div>
+</app-modal>
