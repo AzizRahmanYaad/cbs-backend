@@ -1,0 +1,41 @@
+ool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3dfe8a4d
+2025-11-15T09:03:52.283Z  INFO 1788233 --- [cbs-backend] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-15T09:03:52.305Z  INFO 1788233 --- [cbs-backend] [  restartedMain] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:5432/cbs_dashboard (PostgreSQL 16.10)
+2025-11-15T09:03:52.341Z  INFO 1788233 --- [cbs-backend] [  restartedMain] o.f.core.internal.command.DbVa
+lidate     : Successfully validated 6 migrations (execution time 00:00.022s)
+2025-11-15T09:03:52.379Z  INFO 1788233 --- [cbs-backend] [  restartedMain] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 6
+2025-11-15T09:03:52.381Z  INFO 1788233 --- [cbs-backend] [  restartedMain] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2025-11-15T09:03:52.458Z  INFO 1788233 --- [cbs-backend] [  restartedMain] o.hibernate.jpa.internal.util.
+LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-15T09:03:52.491Z  INFO 1788233 --- [cbs-backend] [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-11-15T09:03:52.512Z  INFO 1788233 --- [cbs-backend] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-15T09:03:52.676Z  INFO 1788233 --- [cbs-backend] [  restartedMain] o.s.o.j.p.SpringPersistenceUni
+tInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-15T09:03:52.709Z  WARN 1788233 --- [cbs-backend] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-15T09:03:52.726Z  INFO 1788233 --- [cbs-backend] [  restartedMain] org.hibernate.orm.connections.
+pooling    : HHH10001005: Database info:
+        Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+        Database driver: undefined/unknown
+        Database version: 16.10
+        Autocommit mode: undefined/unknown
+        Isolation level: undefined/unknown
+        Minimum pool size: undefined/unknown
+        Maximum pool size: undefined/unknown
+2025-11-15T09:03:53.465Z  INFO 1788233 --- [cbs-backend] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformIniti
+ator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA
+ platform integration)
+2025-11-15T09:03:53.500Z  INFO 1788233 --- [cbs-backend] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-15T09:03:53.739Z  INFO 1788233 --- [cbs-backend] [  restartedMain] o.s.d.j.r.query.QueryEnhancerF
+actory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-15T09:03:54.226Z  INFO 1788233 --- [cbs-backend] [  restartedMain] eAuthenticationProviderManager
+Configurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authentic
+ationProvider
+2025-11-15T09:03:54.226Z  WARN 1788233 --- [cbs-backend] [  restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-11-15T09:03:54.353Z  WARN 1788233 --- [cbs-backend] [  restartedMain] JpaBaseConfiguration$JpaWebCon
+figuration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed 
+during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-15T09:03:54.929Z  INFO 1788233 --- [cbs-backend] [  restartedMain] o.s.b.d.a.OptionalLiveReloadSe
+rver       : LiveReload server is running on port 35729
+2025-11-15T09:03:54.955Z  INFO 1788233 --- [cbs-backend] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path '/'
+2025-11-15T09:03:54.964Z  INFO 1788233 --- [cbs-backend] [  restartedMain] com.cbs.CbsBackendApplication            : Started CbsBackendApplication in 4.677 seconds (process running for 5.077)
+<==========---> 80% EXECUTING [58s]
