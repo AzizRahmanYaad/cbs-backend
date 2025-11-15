@@ -1,7 +1,7 @@
 <div class="drill-test-container">
   <div class="page-header">
     <h1>Drill Tests</h1>
-    <button class="btn-primary">+ Create Test</button>
+    <button class="btn-primary" (click)="openCreateModal()">+ Create Test</button>
   </div>
 
   @if (loading()) {
@@ -16,8 +16,7 @@
     <div class="empty-state">
       <div class="empty-icon">🎯</div>
       <h3>No drill tests found</h3>
-      <p>Create your first drill test</p>
-      <button class="btn-primary">Create Test</button>
+      <button class="btn-primary" (click)="openCreateModal()">Create Test</button>
     </div>
   }
 
@@ -27,57 +26,72 @@
         <div class="test-card">
           <div class="test-header">
             <h3>{{ test.title }}</h3>
-            <span class="status-badge" [ngClass]="getStatusClass(test.status)">
-              {{ test.status }}
-            </span>
+            <span class="status-badge" [ngClass]="getStatusClass(test.status)">{{ test.status }}</span>
           </div>
-
           <p class="test-description">{{ test.description }}</p>
-
-          <div class="test-details">
-            <div class="detail-grid">
-              <div class="detail-item">
-                <span class="detail-icon">📅</span>
-                <div>
-                  <div class="detail-label">Test Date</div>
-                  <div class="detail-value">{{ test.testDate | date:'MMM dd, yyyy' }}</div>
-                </div>
-              </div>
-
-              <div class="detail-item">
-                <span class="detail-icon">⏱️</span>
-                <div>
-                  <div class="detail-label">Duration</div>
-                  <div class="detail-value">{{ test.duration }} minutes</div>
-                </div>
-              </div>
-
-              <div class="detail-item">
-                <span class="detail-icon">🎯</span>
-                <div>
-                  <div class="detail-label">Passing Score</div>
-                  <div class="detail-value">{{ test.passingScore }}%</div>
-                </div>
-              </div>
-
-              <div class="detail-item">
-                <span class="detail-icon">🔄</span>
-                <div>
-                  <div class="detail-label">Max Attempts</div>
-                  <div class="detail-value">{{ test.maxAttempts }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div class="test-actions">
-            <button class="btn-secondary">View Details</button>
-            @if (test.status === 'ACTIVE' || test.status === 'PUBLISHED') {
-              <button class="btn-primary">Start Test</button>
-            }
+            <button class="btn-secondary" (click)="openEditModal(test)">Edit</button>
+            <button class="btn-danger" (click)="confirmDelete(test.id)">Delete</button>
           </div>
         </div>
       }
     </div>
   }
 </div>
+
+<app-modal [show]="showModal()" [title]="isEditing() ? 'Edit Test' : 'Create Test'" (close)="closeModal()">
+  <form (ngSubmit)="saveTest()" class="test-form">
+    <div class="form-group">
+      <label for="title">Title *</label>
+      <input type="text" id="title" [(ngModel)]="formData.title" name="title" required />
+    </div>
+    <div class="form-group">
+      <label for="description">Description *</label>
+      <textarea id="description" [(ngModel)]="formData.description" name="description" rows="3" required></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="testDate">Test Date *</label>
+        <input type="date" id="testDate" [(ngModel)]="formData.testDate" name="testDate" required />
+      </div>
+      <div class="form-group">
+        <label for="duration">Duration (min) *</label>
+        <input type="number" id="duration" [(ngModel)]="formData.duration" name="duration" min="1" required />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="passingScore">Passing Score (%) *</label>
+        <input type="number" id="passingScore" [(ngModel)]="formData.passingScore" name="passingScore" min="0" max="100" required />
+      </div>
+      <div class="form-group">
+        <label for="maxAttempts">Max Attempts *</label>
+        <input type="number" id="maxAttempts" [(ngModel)]="formData.maxAttempts" name="maxAttempts" min="1" required />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="status">Status *</label>
+      <select id="status" [(ngModel)]="formData.status" name="status" required>
+        <option value="DRAFT">Draft</option>
+        <option value="PUBLISHED">Published</option>
+        <option value="ACTIVE">Active</option>
+        <option value="COMPLETED">Completed</option>
+        <option value="ARCHIVED">Archived</option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+      <button type="submit" class="btn-primary">{{ isEditing() ? 'Update' : 'Create' }}</button>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal [show]="showDeleteConfirm()" [title]="'Confirm Delete'" (close)="cancelDelete()">
+  <div class="delete-confirm">
+    <p>Delete this drill test? This action cannot be undone.</p>
+    <div class="delete-actions">
+      <button type="button" class="btn-cancel" (click)="cancelDelete()">Cancel</button>
+      <button type="button" class="btn-danger" (click)="deleteTest()">Delete</button>
+    </div>
+  </div>
+</app-modal>

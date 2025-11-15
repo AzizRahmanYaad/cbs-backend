@@ -1,7 +1,7 @@
 <div class="tasks-container">
   <div class="page-header">
     <h1>Task Management</h1>
-    <button class="btn-primary">+ Create Task</button>
+    <button class="btn-primary" (click)="openCreateModal()">+ Create Task</button>
   </div>
 
   @if (loading()) {
@@ -16,8 +16,7 @@
     <div class="empty-state">
       <div class="empty-icon">✓</div>
       <h3>No tasks found</h3>
-      <p>Create your first task to get started</p>
-      <button class="btn-primary">Create Task</button>
+      <button class="btn-primary" (click)="openCreateModal()">Create Task</button>
     </div>
   }
 
@@ -28,53 +27,74 @@
           <div class="task-header">
             <div class="task-title">
               <h3>{{ task.title }}</h3>
-              <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
-                {{ task.priority }}
-              </span>
+              <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">{{ task.priority }}</span>
             </div>
-            <span class="status-badge" [ngClass]="getStatusClass(task.status)">
-              {{ task.status.replace('_', ' ') }}
-            </span>
+            <span class="status-badge" [ngClass]="getStatusClass(task.status)">{{ task.status }}</span>
           </div>
-
           <p class="task-description">{{ task.description }}</p>
-
-          <div class="task-details">
-            <div class="detail-row">
-              <span class="detail-label">Due Date:</span>
-              <span class="detail-value">{{ task.dueDate | date:'MMM dd, yyyy' }}</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-label">Estimated:</span>
-              <span class="detail-value">{{ task.estimatedHours }}h</span>
-            </div>
-            @if (task.actualHours) {
-              <div class="detail-row">
-                <span class="detail-label">Actual:</span>
-                <span class="detail-value">{{ task.actualHours }}h</span>
-              </div>
-            }
-            @if (task.tags && task.tags.length > 0) {
-              <div class="task-tags">
-                @for (tag of task.tags; track tag) {
-                  <span class="tag">{{ tag }}</span>
-                }
-              </div>
-            }
-          </div>
-
           <div class="task-actions">
-            <button class="btn-link">View</button>
-            <button class="btn-link">Edit</button>
-            @if (task.status === 'TODO') {
-              <button class="btn-primary-sm">Start</button>
-            }
-            @if (task.status === 'IN_PROGRESS') {
-              <button class="btn-primary-sm">Complete</button>
-            }
+            <button class="btn-link" (click)="openEditModal(task)">Edit</button>
+            <button class="btn-link-danger" (click)="confirmDelete(task.id)">Delete</button>
           </div>
         </div>
       }
     </div>
   }
 </div>
+
+<app-modal [show]="showModal()" [title]="isEditing() ? 'Edit Task' : 'Create Task'" (close)="closeModal()">
+  <form (ngSubmit)="saveTask()" class="task-form">
+    <div class="form-group">
+      <label for="title">Title *</label>
+      <input type="text" id="title" [(ngModel)]="formData.title" name="title" required />
+    </div>
+    <div class="form-group">
+      <label for="description">Description *</label>
+      <textarea id="description" [(ngModel)]="formData.description" name="description" rows="3" required></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="priority">Priority *</label>
+        <select id="priority" [(ngModel)]="formData.priority" name="priority" required>
+          <option value="LOW">Low</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="HIGH">High</option>
+          <option value="CRITICAL">Critical</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="status">Status *</label>
+        <select id="status" [(ngModel)]="formData.status" name="status" required>
+          <option value="TODO">To Do</option>
+          <option value="IN_PROGRESS">In Progress</option>
+          <option value="REVIEW">Review</option>
+          <option value="COMPLETED">Completed</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="dueDate">Due Date *</label>
+        <input type="date" id="dueDate" [(ngModel)]="formData.dueDate" name="dueDate" required />
+      </div>
+      <div class="form-group">
+        <label for="estimatedHours">Est. Hours *</label>
+        <input type="number" id="estimatedHours" [(ngModel)]="formData.estimatedHours" name="estimatedHours" min="0" required />
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+      <button type="submit" class="btn-primary">{{ isEditing() ? 'Update' : 'Create' }}</button>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal [show]="showDeleteConfirm()" [title]="'Confirm Delete'" (close)="cancelDelete()">
+  <div class="delete-confirm">
+    <p>Delete this task? This action cannot be undone.</p>
+    <div class="delete-actions">
+      <button type="button" class="btn-cancel" (click)="cancelDelete()">Cancel</button>
+      <button type="button" class="btn-danger" (click)="deleteTask()">Delete</button>
+    </div>
+  </div>
+</app-modal>
