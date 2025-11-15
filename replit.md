@@ -12,6 +12,8 @@ A comprehensive unified dashboard for the CBS team with SSO authentication and m
 - Secure REST API endpoints  
 
 ## Technology Stack
+
+### Backend
 - **Framework**: Spring Boot 3.5.7
 - **Build Tool**: Gradle 8.14.3
 - **Language**: Java 19 (GraalVM)
@@ -19,6 +21,13 @@ A comprehensive unified dashboard for the CBS team with SSO authentication and m
 - **Security**: Spring Security + JWT
 - **API Documentation**: OpenAPI/Swagger
 - **Database Migrations**: Flyway
+
+### Frontend
+- **Framework**: Angular 20.3.0
+- **Build Tool**: Vite (via @angular/build)
+- **Language**: TypeScript 5.9.2
+- **UI**: Standalone Components with Custom Modal System
+- **Styling**: SCSS with Gradient Themes
 
 ## Architecture
 
@@ -171,6 +180,13 @@ Content-Type: application/json
 ```
 
 ## Recent Changes
+- **2025-11-15**: Angular 20 Frontend Vite configuration for Replit hosting
+  - Created `cbs-frontend/vite.config.ts` to allow dynamic Replit hostnames
+  - Configured `server.host: true` to bind dev server to 0.0.0.0
+  - Set up HMR over WSS (protocol: 'wss', clientPort: 443) for Replit webview
+  - Both workflows running: Angular Frontend (port 5000), Spring Boot Backend (port 8080)
+  - Application accessible via Replit public URL
+
 - **2025-11-15**: Security configuration fixes and port optimization
   - Removed conflicting Spring Security default user configuration
   - Simplified authorization rules to use `.authenticated()` for all protected endpoints
