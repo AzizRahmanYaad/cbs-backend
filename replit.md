@@ -206,3 +206,36 @@ Content-Type: application/json
 - Database connection may sleep after 5 minutes of inactivity (Neon behavior)
 - All endpoints except login/refresh require JWT authentication
 - Swagger UI accessible at http://localhost:8080/swagger-ui/index.html
+
+## Replit-Specific Configuration
+
+### Vite Dev Server for Angular (cbs-frontend/vite.config.ts)
+Angular 20 uses Vite as its build tool. For Replit hosting with dynamic hostnames, the following configuration is required:
+
+```typescript
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  server: {
+    host: true,              // Binds to 0.0.0.0, allows all hosts
+    port: 5000,              // Frontend port
+    strictPort: true,        // Enforces port 5000
+    hmr: {
+      clientPort: 443,       // HTTPS port for Replit proxy
+      protocol: 'wss',       // Secure WebSocket for HMR
+      host: true             // Allows dynamic Replit hostnames
+    }
+  },
+  preview: {
+    host: true,
+    port: 5000
+  }
+});
+```
+
+This configuration allows the Angular dev server to accept requests from Replit's ephemeral `.pike.replit.dev` hostnames.
+
+### Accessing the Application
+- **Frontend**: Access via Replit Webview or public URL (port 5000)
+- **Backend API**: Accessible at public URL with `/api/*` endpoints (port 8080)
+- **Spring Boot Startup**: Takes ~18 seconds, workflow may show "FAILED" but application runs successfully
