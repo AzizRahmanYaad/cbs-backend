@@ -70,9 +70,10 @@ com.cbs/
 
 ## Default Credentials
 **Username**: admin  
-**Password**: admin123
+**Password**: admin123  
+**Role**: ROLE_ADMIN (full system access)
 
-**Roles**: ADMIN, MANAGER, USER, TRAINING_ADMIN, REPORT_ADMIN, TASK_ADMIN, DRILL_ADMIN
+**Available Roles**: ROLE_ADMIN, ROLE_MANAGER, ROLE_USER, ROLE_TRAINING_ADMIN, ROLE_REPORT_ADMIN, ROLE_TASK_ADMIN, ROLE_DRILL_ADMIN
 
 ## Configuration
 
@@ -132,7 +133,51 @@ Migrations run automatically on startup. Located in `src/main/resources/db/migra
 5. Add comprehensive unit and integration tests
 6. Set up deployment configuration
 
+## Testing with Postman (From Your Ubuntu VM)
+
+### Accessing the API
+The Spring Boot API is running on Replit and accessible via the public URL.
+- **Local Port**: 8080 (inside Replit container)
+- **Public URL**: Check the Replit webview for the actual URL
+- You'll access the API from your Ubuntu VM using the public Replit URL, NOT localhost
+
+### Example API Calls
+
+**1. Login**
+```bash
+POST https://[replit-url]/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+**2. Access Protected Endpoint**
+```bash
+GET https://[replit-url]/api/tasks
+Authorization: Bearer [your-jwt-token]
+```
+
+**3. Refresh Token**
+```bash
+POST https://[replit-url]/api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "[your-refresh-token]"
+}
+```
+
 ## Recent Changes
+- **2025-11-15**: Security configuration fixes and port optimization
+  - Removed conflicting Spring Security default user configuration
+  - Simplified authorization rules to use `.authenticated()` for all protected endpoints
+  - Kept port 8080 for Replit compatibility (user accesses via public URL from Ubuntu VM)
+  - Fixed role authority alignment issues
+  - Application compiles and starts successfully
+
 - **2025-11-15**: Initial project setup and authentication infrastructure
   - Created database schema with Flyway migrations
   - Implemented JWT authentication with refresh tokens
