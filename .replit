@@ -21,14 +21,22 @@ args = "Spring Boot Backend"
 name = "Spring Boot Backend"
 author = "agent"
 
+[workflows.workflow.metadata]
+outputType = "console"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "./gradlew bootRun"
 waitForPort = 8080
 
-[workflows.workflow.metadata]
-outputType = "console"
-
 [[ports]]
 localPort = 8080
 externalPort = 8080
+
+[[ports]]
+localPort = 35729
+externalPort = 80
+
+[[ports]]
+localPort = 39521
+externalPort = 3000
